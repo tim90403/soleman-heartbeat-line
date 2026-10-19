@@ -143,7 +143,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'amplitude',
 			array(
 				'label'              => esc_html__( '高度幅度', 'soleman-heartbeat-line' ),
@@ -166,7 +166,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'peak_count',
 			array(
 				'label'              => esc_html__( '波峰數量', 'soleman-heartbeat-line' ),
@@ -181,7 +181,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'peak_density',
 			array(
 				'label'              => esc_html__( '波峰密度', 'soleman-heartbeat-line' ),
@@ -196,7 +196,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'effect_width',
 			array(
 				'label'              => esc_html__( '特效寬度', 'soleman-heartbeat-line' ),
@@ -219,7 +219,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'line_width',
 			array(
 				'label'              => esc_html__( '線段寬度', 'soleman-heartbeat-line' ),
@@ -241,7 +241,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'duration',
 			array(
 				'label'              => esc_html__( '走完一輪的秒數', 'soleman-heartbeat-line' ),
@@ -276,7 +276,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'line_opacity',
 			array(
 				'label'              => esc_html__( '線段透明度', 'soleman-heartbeat-line' ),
@@ -312,7 +312,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'node_opacity',
 			array(
 				'label'              => esc_html__( '節點透明度', 'soleman-heartbeat-line' ),
@@ -348,7 +348,7 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'dot_opacity',
 			array(
 				'label'              => esc_html__( '移動點透明度', 'soleman-heartbeat-line' ),

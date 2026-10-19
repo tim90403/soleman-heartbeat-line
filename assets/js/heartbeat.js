@@ -120,8 +120,104 @@
 		return 'rgba(' + Math.round(color.r) + ',' + Math.round(color.g) + ',' + Math.round(color.b) + ',' + alpha + ')';
 	}
 
+	var RESPONSIVE_KEYS = [
+		'amplitude',
+		'peak_count',
+		'peak_density',
+		'effect_width',
+		'line_width',
+		'duration',
+		'line_opacity',
+		'node_opacity',
+		'dot_opacity'
+	];
+
+	function isEmptyControl(value) {
+		if (value === undefined || value === null || value === '') {
+			return true;
+		}
+
+		if (typeof value === 'object') {
+			return value.size === undefined || value.size === null || value.size === '';
+		}
+
+		return false;
+	}
+
+	function currentDeviceMode() {
+		try {
+			if (!window.elementorFrontend || !elementorFrontend.getCurrentDeviceMode) {
+				return 'desktop';
+			}
+
+			return elementorFrontend.getCurrentDeviceMode() || 'desktop';
+		} catch (error) {
+			return 'desktop';
+		}
+	}
+
+	function responsiveValue(raw, controlKey) {
+		var mode = currentDeviceMode();
+		var devices;
+		var index;
+		var device;
+		var candidate;
+
+		if (mode === 'desktop' || !window.elementorFrontend || !elementorFrontend.breakpoints) {
+			return raw[controlKey];
+		}
+
+		if (mode === 'widescreen') {
+			candidate = raw[controlKey + '_widescreen'];
+			return isEmptyControl(candidate) ? raw[controlKey] : candidate;
+		}
+
+		devices = elementorFrontend.breakpoints.getActiveBreakpointsList({ withDesktop: true });
+		index = devices.indexOf(mode);
+
+		if (index < 0) {
+			return raw[controlKey];
+		}
+
+		device = mode;
+
+		while (index <= devices.length) {
+			if (device === 'desktop') {
+				return raw[controlKey];
+			}
+
+			candidate = raw[controlKey + '_' + device];
+
+			if (!isEmptyControl(candidate)) {
+				return candidate;
+			}
+
+			index++;
+			device = devices[index];
+		}
+
+		return raw[controlKey];
+	}
+
+	function applyResponsive(raw) {
+		var next = {};
+		var key;
+
+		for (key in raw) {
+			if (Object.prototype.hasOwnProperty.call(raw, key)) {
+				next[key] = raw[key];
+			}
+		}
+
+		RESPONSIVE_KEYS.forEach(function (controlKey) {
+			next[controlKey] = responsiveValue(raw, controlKey);
+		});
+
+		return next;
+	}
+
 	function normalizeSettings(raw) {
-		raw = raw || {};
+		raw = applyResponsive(raw || {});
 
 		return {
 			showNodes: readBool(raw.showNodes !== undefined ? raw.showNodes : raw.show_nodes),
